@@ -1,0 +1,17 @@
+ru:
+  label_custom_report_plural: "Отчеты"
+  label_custom_report_view_all: "Список всех отчетов"
+  label_custom_report_new: "Добавить новый отчет"
+  label_custom_report_public_list: "Общие отчеты"
+  label_custom_report_own_list: "Мои отчеты"
+  label_custom_report_edit: "Изменение отчета"
+
+  label_chart_type_line: "Линейный график"
+  label_chart_type_donut: "Бублик"
+
+  field_chart_type: "Тип графика"
+  field_null_text: "Текст для пустых значений"
+
+  message_custom_reports_created: "Отчет успешно изменен"
+  message_custom_reports_updated: "Отчет успешно обновлен"
+  message_custom_reports_destroyed: "Отчет успешно удален"

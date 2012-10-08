@@ -1,0 +1,56 @@
+<% labelled_form_for custom_report,
+    :url => url, 
+    :html => { :id => 'custom-report-form' } do |f| %>
+
+  <%= error_messages_for custom_report %>
+
+  <div class="box">
+
+    <div class="tablular">
+      <p>
+        <label for="custom_report_name"><%= l(:field_name) %></label>
+        <%= text_field 'custom_report', 'name', :size => 80 %>
+      </p>
+
+      <p>
+        <label for="custom_report_description"><%= l(:field_description) %></label>
+        <%= text_field 'custom_report', 'description', :size => 80 %>
+      </p>
+
+      <p>
+        <label for="custom_report_chart_type"><%= l(:field_chart_type) %></label>
+        <%= select 'custom_report', 'chart_type', 
+            CustomReport::CHART_TYPES.collect { |ct| [l("label_chart_type_#{ct}"), ct] }, 
+            :include_blank => false %>
+      </p>
+
+      <% if User.current.admin? || User.current.allowed_to?(:manage_public_custom_reports, @project) %>
+        <p>
+          <label for="custom_report_is_public"><%=l(:field_is_public)%></label>
+          <%= check_box 'custom_report', 'is_public', 
+              :onchange => (User.current.admin? ? nil : 'if (this.checked) {$("custom_report_is_for_all").checked = false; $("custom_report_is_for_all").disabled = true;} else {$("custom_report_is_for_all").disabled = false;}') %>
+        </p>
+      <% end %>
+
+      <p>
+        <label for="custom_report_group_by"><%= l(:field_group_by) %></label>
+        <%= select 'custom_report', 'group_by', 
+            custom_report.query.groupable_columns.collect {|c| [c.caption, c.name.to_s]}, 
+            :include_blank => true %>
+      </p>
+
+      <p>
+        <label for="custom_report_null_text"><%= l(:field_null_text) %></label>
+        <%= text_field 'custom_report', 'null_text', :size => 80 %>
+      </p>
+    </div>
+
+    <fieldset>
+      <legend><%= l(:label_filter_plural) %></legend>
+      <%= render :partial => 'queries/filters', :locals => { :query => custom_report.query } %>
+    </fieldset>
+
+  </div>
+
+  <%= submit_tag message %>
+<% end %>

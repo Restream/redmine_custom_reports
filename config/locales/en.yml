@@ -1,3 +1,17 @@
-# English strings go here for Rails i18n
 en:
-  my_label: "My label"
+  label_custom_report_plural: "Custom reports"
+  label_custom_report_view_all: "View all custom reports"
+  label_custom_report_new: "Create new custom report"
+  label_custom_report_public_list: "Public custom reports"
+  label_custom_report_own_list: "My custom reports"
+  label_custom_report_edit: "Edit custom report"
+
+  label_chart_type_line: "Line chart"
+  label_chart_type_donut: "Donut chart"
+
+  field_chart_type: "Chart type"
+  field_null_text: "Text for null values"
+
+  message_custom_reports_created: "Custom report created successfuly"
+  message_custom_reports_updated: "Custom report updated successfuly"
+  message_custom_reports_destroyed: "Custom report destroyed successfuly"

@@ -1,0 +1,13 @@
+<h2><%= l(:label_custom_report_new) %></h2>
+
+<%= render :partial => 'form',
+    :locals => {
+        :custom_report => @custom_report,
+        :message => l(:button_create),
+        :url => url_for(:controller => "custom_reports", :action => "create") } %>
+
+<% html_title(l(:label_custom_report_new)) -%>
+
+<% content_for :sidebar do %>
+    <%= render :partial => 'sidebar' %>
+<% end %>

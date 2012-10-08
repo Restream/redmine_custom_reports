@@ -1,3 +1,3 @@
-# Redmine Reports & Charts plugin
+# Redmine Custom Reports (with charts) plugin
 
-Redmine plugin for reports and charts
+Redmine plugin for custom reports with charts

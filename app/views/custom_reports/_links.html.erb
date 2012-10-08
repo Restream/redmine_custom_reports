@@ -1,0 +1,11 @@
+<% if custom_reports && custom_reports.any? %>
+  <% custom_reports.each do |custom_report| %>
+    <%= link_to custom_report.name, 
+                { :controller => 'custom_reports', 
+                  :action => 'show', 
+                  :project_id => @project,
+                  :id => custom_report.id } %><br />
+  <% end %>
+<% else %>
+  <%= l(:label_no_data) %>
+<% end %>

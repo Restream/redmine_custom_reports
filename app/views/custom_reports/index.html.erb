@@ -1,0 +1,62 @@
+<% if User.current.allowed_to?(:manage_custom_reports, @project) %>
+  <div class="contextual">
+    <%= link_to(l(:button_create),
+          new_project_custom_report_path(@project),
+          :class => 'icon icon-add') %>
+  </div>
+<% end %>
+
+<h2><%= l(:label_custom_report_plural) %></h2>
+
+<% if @custom_reports.any? %>
+  <div class="autoscroll">
+    <table class="list custom_reports">
+      <thead>
+        <th><%= l(:field_name) %></th>
+        <th><%= l(:field_description) %></th>
+        <th><%= l(:field_chart_type) %></th>
+        <th><%= l(:field_is_public) %></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @custom_reports.each do |custom_report| %>
+          <tr>
+            <td>
+              <%= link_to custom_report.name, 
+                          { :controller => 'custom_reports', 
+                            :action => 'show', 
+                            :project_id => @project,
+                            :id => custom_report.id } %><br />
+            </td>
+            <td><%= custom_report.description %></td>
+            <td><%= custom_report.chart_type %></td>
+            <td><%= custom_report.is_public %></td>
+            <td>
+              <% if (custom_report.is_public && 
+                        User.current.allowed_to?(:manage_public_custom_reports, @project)) ||
+                    (!custom_report.is_public && 
+                        User.current.allowed_to?(:manage_custom_reports, @project)) %>
+                <%= link_to(l(:button_edit),
+                      edit_project_custom_report_path(@project, custom_report),
+                      :class => 'icon icon-edit') %>
+
+                <%= link_to(l(:button_delete),
+                      project_custom_report_path(@project, custom_report),
+                      :confirm => l(:text_are_you_sure),
+                      :method => :delete,
+                      :class => 'icon icon-del') %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+<% else %>
+  <%= l(:label_no_data) %>
+<% end %>
+
+
+<% content_for :sidebar do %>
+    <%= render :partial => 'sidebar' %>
+<% end %>

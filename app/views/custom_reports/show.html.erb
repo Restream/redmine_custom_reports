@@ -1,0 +1,28 @@
+<%= render :partial => "header_common" %>
+
+<% if User.current.allowed_to?(:manage_custom_reports, @project) %>
+  <div class="contextual">
+    
+    <%= link_to(l(:button_edit),
+          edit_project_custom_report_path(@project, @custom_report),
+          :class => 'icon icon-edit') %>
+
+    <%= link_to(l(:button_delete),
+          project_custom_report_path(@project, @custom_report),
+          :confirm => l(:text_are_you_sure),
+          :method => :delete,
+          :class => 'icon icon-del') %>
+  </div>
+<% end %>
+
+<h2><%=h @custom_report.name %></h2>
+
+<p><%= @custom_report.description %></p>
+
+<%= chart_tag(@custom_report) %>
+
+<%= javascript_include_tag "custom_report", :plugin => 'redmine_custom_reports' %>
+
+<% content_for :sidebar do %>
+    <%= render :partial => 'sidebar' %>
+<% end %>
