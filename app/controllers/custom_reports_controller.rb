@@ -3,7 +3,9 @@ class CustomReportsController < ApplicationController
 
   before_filter :find_project_by_project_id
   before_filter :authorize
-  before_filter :find_custom_reports
+  before_filter :find_custom_reports, :only => [:index, :show, :new, :edit]
+  before_filter :find_custom_report, :only => [:show, :edit, :update, :destroy]
+  before_filter :authorize_to_manage, :only => [:edit, :update, :destroy]
 
   helper :queries
   include QueriesHelper
@@ -12,7 +14,10 @@ class CustomReportsController < ApplicationController
   end
 
   def show
-    @custom_report = @project.custom_reports.visible.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { Rabl::Renderer.json(@custom_report, 'custom_reports/show') }
+    end
   end
 
   def new
@@ -37,11 +42,9 @@ class CustomReportsController < ApplicationController
   end
 
   def edit
-    @custom_report = @project.custom_reports.visible.find(params[:id])
   end
 
   def update
-    @custom_report = @project.custom_reports.visible.find(params[:id])
     @custom_report.is_public = false unless User.current.allowed_to?(:manage_public_custom_reports, @project) || User.current.admin?
 
     grab_filters_from_params(@custom_report)
@@ -57,7 +60,6 @@ class CustomReportsController < ApplicationController
   end
 
   def destroy
-    @custom_report = @project.custom_reports.visible.find(params[:id])
     if @custom_report.destroy
       flash[:notice] = l(:message_custom_reports_destroyed)
     else
@@ -75,9 +77,17 @@ class CustomReportsController < ApplicationController
     @public_custom_reports = grouped_reports[true]
   end
 
+  def find_custom_report
+    @custom_report = @project.custom_reports.visible.find(params[:id])
+  end
+
   def grab_filters_from_params(custom_report)
     @query = custom_report.query.clone
     build_query_from_params
     custom_report.filters = @query.filters
+  end
+
+  def authorize_to_manage
+    @custom_report.allowed_to_manage? || deny_access
   end
 end

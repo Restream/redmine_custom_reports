@@ -13,7 +13,7 @@ class CustomReportsControllerTest < ActionController::TestCase
     @project.enable_module! :custom_reports
 
     # admin
-    @user = User.find(2) TODO: wihuch user???
+    @user = User.find(2) #TODO: which user???
     User.current = @user
 
     @request = ActionController::TestRequest.new

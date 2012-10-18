@@ -6,8 +6,10 @@ en:
   label_custom_report_own_list: "My custom reports"
   label_custom_report_edit: "Edit custom report"
 
-  label_chart_type_line: "Line chart"
-  label_chart_type_donut: "Donut chart"
+  label_chart_type_pie: "Pie"
+  label_chart_type_donut: "Donut"
+  label_chart_type_bar: "Discrete Bar"
+  label_chart_type_horizontal_bar: "Horizontal Bar"
 
   field_chart_type: "Chart type"
   field_null_text: "Text for null values"
