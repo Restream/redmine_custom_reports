@@ -36,7 +36,7 @@
               <td><%= custom_report.is_public %></td>
             <% end %>
             <td>
-              <% if @custom_report.allowed_to_manage? %>
+              <% if custom_report.allowed_to_manage? %>
                 <%= link_to(l(:button_edit),
                       edit_project_custom_report_path(@project, custom_report),
                       :class => 'icon icon-edit') %>

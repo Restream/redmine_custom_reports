@@ -29,7 +29,7 @@ class CustomReport < ActiveRecord::Base
 
   def data
     @data ||= query.issue_count_by_group.map do |k, v|
-      { :label => (k || custom_report.null_text).to_s, :value => v }
+      { :label => (k || null_text).to_s, :value => v }
     end
   end
 
