@@ -31,15 +31,4 @@ module CustomReportsHelper
       "width:#{w}px;"
     end
   end
-
-  def groupable_columns(project)
-    QueryExt.new().groupable_columns.keep_if do |col|
-      if col.respond_to? :custom_field
-        col.custom_field.is_for_all ||
-            project.all_issue_custom_fields.include?(col.custom_field)
-      else
-        true
-      end
-    end
-  end
 end

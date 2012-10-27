@@ -25,6 +25,17 @@ class CustomReport < ActiveRecord::Base
       }
   }
 
+  def groupable_columns
+    QueryExt.new().groupable_columns.keep_if do |col|
+      if col.respond_to? :custom_field
+        col.custom_field.is_for_all ||
+            project.all_issue_custom_fields.include?(col.custom_field)
+      else
+        true
+      end
+    end
+  end
+
   def info
     {
         :chart_type => chart_type,
@@ -56,6 +67,6 @@ class CustomReport < ActiveRecord::Base
   end
 
   def group_by_column
-    self.class.groupable_columns.detect { |col| col.name.to_s == group_by }
+    groupable_columns.detect { |col| col.name.to_s == group_by }
   end
 end

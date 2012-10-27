@@ -41,7 +41,7 @@
       <p>
         <label for="custom_report_group_by"><%= l(:field_group_by) %></label>
         <%= select 'custom_report', 'group_by',
-            groupable_columns(@project).collect {|c| [c.caption, c.name.to_s]},
+            @custom_report.groupable_columns.collect {|c| [c.caption, c.name.to_s]},
             :include_blank => true %>
       </p>
 
