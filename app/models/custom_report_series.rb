@@ -25,7 +25,7 @@ class CustomReportSeries < ActiveRecord::Base
   end
 
   def data_hash
-    @data_hash ||= query.issue_count_by_group
+    @data_hash ||= (query.issue_count_by_group || {})
   end
 
   def flt=(*args)

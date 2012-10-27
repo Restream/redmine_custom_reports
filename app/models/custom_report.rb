@@ -25,12 +25,6 @@ class CustomReport < ActiveRecord::Base
       }
   }
 
-  class << self
-    def groupable_columns
-      QueryExt.new().groupable_columns
-    end
-  end
-
   def info
     {
         :chart_type => chart_type,
