@@ -1,0 +1,15 @@
+<% series_id = sanitized_object_name(f.object_name) %>
+
+<fieldset data-series_id="<%= series_id %>">
+  <legend><%= l(:label_series_filters) %></legend>
+  <p>
+    <%= f.text_field :name, :size => 80 %>
+  </p>
+  <%= render :partial => 'series_filters', :locals => {
+      :f => f, :query => f.object.query, :series_id => series_id } %>
+
+  <%= link_to l(:message_remove_custom_report_series), '#',
+              :class => 'remove-custom-report-series',
+              "data-cant_delete_message" => l(:message_cant_delete_last_series) %>
+  <%= f.hidden_field :_destroy, :value => :false %>
+</fieldset>

@@ -5,15 +5,21 @@ ru:
   label_custom_report_public_list: "Общие отчеты"
   label_custom_report_own_list: "Мои отчеты"
   label_custom_report_edit: "Изменение отчета"
+  label_series_filters: "Фильтры рядов данных"
 
-  label_chart_type_pie: "Кроговая диаграмма"
+  label_chart_type_pie: "Круговая диаграмма"
   label_chart_type_donut: "Кольцевая диаграмма"
   label_chart_type_bar: "Столбчатая диаграмма"
   label_chart_type_horizontal_bar: "Гистограмма"
+  label_chart_type_stacked_bar: "Группированная столбчатая диаграмма"
 
   field_chart_type: "Тип диаграммы"
   field_null_text: "Текст для пустых значений"
+  field_series_name: "Название ряда"
 
   message_custom_reports_created: "Отчет успешно изменен"
   message_custom_reports_updated: "Отчет успешно обновлен"
   message_custom_reports_destroyed: "Отчет успешно удален"
+  message_cant_delete_last_series: "В отчете должен быть по крайней мере один ряд данных!"
+  message_add_custom_report_series: "Добавить ряд"
+  message_remove_custom_report_series: "Удалить ряд"

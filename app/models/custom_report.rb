@@ -1,12 +1,12 @@
 class CustomReport < ActiveRecord::Base
   unloadable
 
-  CHART_TYPES = %w(pie donut bar horizontal_bar)
+  CHART_TYPES = %w(pie donut bar horizontal_bar stacked_bar)
+  MULTI_SERIES = %w(horizontal_bar stacked_bar)
 
   belongs_to :project
   belongs_to :user
-
-  serialize :filters
+  has_many :series, :class_name => "CustomReportSeries", :order => "name"
 
   validates_presence_of :project
   validates_presence_of :user
@@ -14,6 +14,8 @@ class CustomReport < ActiveRecord::Base
   validates_presence_of :group_by
   validates_presence_of :null_text
   validates_inclusion_of :chart_type, :in => CHART_TYPES
+
+  accepts_nested_attributes_for :series, :allow_destroy => true
 
   named_scope :visible, lambda { |*args|
       user = args.shift || User.current
@@ -23,13 +25,32 @@ class CustomReport < ActiveRecord::Base
       }
   }
 
-  def query
-    @query ||= build_query
+  class << self
+    def groupable_columns
+      QueryExt.new().groupable_columns
+    end
+  end
+
+  def info
+    {
+        :chart_type => chart_type,
+        :group_by_caption => group_by_column.try(:caption),
+        :series_count => series.count,
+        :multi_series => multi_series?
+    }
+  end
+
+  def multi_series?
+    MULTI_SERIES.include?(chart_type)
   end
 
   def data
-    @data ||= query.issue_count_by_group.map do |k, v|
-      { :label => (k || null_text).to_s, :value => v }
+    if multi_series?
+      # all series must have the same keys
+      keys = series.map { |s| s.data_hash.keys }.flatten.uniq
+      series.map { |s| s.data(keys) }
+    else
+      series.map { |s| s.data }
     end
   end
 
@@ -40,14 +61,7 @@ class CustomReport < ActiveRecord::Base
     )
   end
 
-  private
-
-  def build_query
-    Query.new(
-      :name => name,
-      :filters => filters,
-      :group_by => group_by,
-      :is_public => true,
-      :project => project)
+  def group_by_column
+    self.class.groupable_columns.detect { |col| col.name.to_s == group_by }
   end
 end

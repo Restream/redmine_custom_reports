@@ -14,22 +14,20 @@ class CustomReportsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json { Rabl::Renderer.json(@custom_report, 'custom_reports/show') }
-    end
   end
 
   def new
     @custom_report = @project.custom_reports.build
+    @custom_report.series.build
   end
 
   def create
     @custom_report = @project.custom_reports.build(params[:custom_report])
     @custom_report.user = User.current
-    @custom_report.is_public = false unless User.current.allowed_to?(:manage_public_custom_reports, @project) || User.current.admin?
-
-    grab_filters_from_params(@custom_report)
+    unless User.current.allowed_to?(:manage_public_custom_reports, @project) ||
+           User.current.admin?
+      @custom_report.is_public = false
+    end
 
     if @custom_report.save
       redirect_to url_for(
@@ -42,12 +40,14 @@ class CustomReportsController < ApplicationController
   end
 
   def edit
+    @custom_report.series.build if @custom_report.series.empty?
   end
 
   def update
-    @custom_report.is_public = false unless User.current.allowed_to?(:manage_public_custom_reports, @project) || User.current.admin?
-
-    grab_filters_from_params(@custom_report)
+    unless User.current.allowed_to?(:manage_public_custom_reports, @project) ||
+           User.current.admin?
+      @custom_report.is_public = false
+    end
 
     if @custom_report.update_attributes(params[:custom_report])
       redirect_to url_for(
@@ -79,12 +79,6 @@ class CustomReportsController < ApplicationController
 
   def find_custom_report
     @custom_report = @project.custom_reports.visible.find(params[:id])
-  end
-
-  def grab_filters_from_params(custom_report)
-    @query = custom_report.query.clone
-    build_query_from_params
-    custom_report.filters = @query.filters
   end
 
   def authorize_to_manage

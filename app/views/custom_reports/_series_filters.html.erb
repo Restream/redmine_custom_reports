@@ -1,0 +1,120 @@
+<% filter_attr = "#{f.object_name}[flt]" %>
+
+<table style="width:100%">
+  <tr>
+    <td>
+      <table>
+        <% query.sorted_available_filters.each do |filter| %>
+          <%
+             field = filter[0]
+             field_id = "#{series_id}_#{field}"
+             options = filter[1]
+          %>
+          <tr <%= 'style="display:none;"' unless query.has_filter?(field) %>
+              id="tr_<%= field_id %>" class="filter"
+              data-field_id="<%= field_id %>">
+
+            <td class="field">
+              <%= check_box_tag "#{filter_attr}f[]",
+                                field,
+                                query.has_filter?(field),
+                                :id => "cb_#{field_id}",
+                                :class => "toggle_series_filter" %>
+              <label for="cb_<%= field_id %>">
+                <%= filter[1][:name] || l(("field_"+field.to_s.gsub(/\_id$/, "")).to_sym) %>
+              </label>
+            </td>
+
+            <td class="operator">
+              <%= label_tag "operators_#{field_id}",
+                            l(:description_filter),
+                            :class => "hidden-for-sighted" %>
+              <%= select_tag "#{filter_attr}op[#{field}]",
+                             options_for_select(
+                                 operators_for_select(options[:type]),
+                                 query.operator_for(field)),
+                             :id => "operators_#{field_id}",
+                             :onchange => "toggle_operator('#{field_id}');",
+                             :class => "toggle_series_filter_operator" %>
+            </td>
+
+            <td class="values">
+              <div id="div_values_<%= field_id %>" style="display:none;">
+                <% case options[:type]
+                     when :list, :list_optional, :list_status, :list_subprojects %>
+                  <span class="span_values_<%= field_id %>">
+                    <%= select_tag "#{filter_attr}v[#{field}][]",
+                                   options_for_select(
+                                       options[:values],
+                                       query.values_for(field)),
+                                   :class => "values_#{field_id}",
+                                   :id => "values_#{field_id}_1",
+                                   :multiple => (query.values_for(field) && query.values_for(field).length > 1) %>
+                    <%= link_to_function image_tag('bullet_toggle_plus.png'),
+                                         "toggle_multi_select('values_#{field_id}_1');" %>
+                  </span>
+                <% when :date, :date_past %>
+                  <span class="span_values_<%= field_id %>">
+                    <%= text_field_tag "#{filter_attr}v[#{field}][]",
+                                       query.value_for(field),
+                                       :size => 10,
+                                       :class => "values_#{field_id}",
+                                       :id => "values_#{field_id}_1" %>
+                    <%= calendar_for "values_#{field_id}_1" %>
+                  </span>
+                  <span class="span_values_<%= field_id %>">
+                    <%= text_field_tag "#{filter_attr}v[#{field}][]",
+                                       query.value_for(field, 1),
+                                       :size => 10,
+                                       :class => "values_#{field_id}",
+                                       :id => "values_#{field_id}_2" %>
+                    <%= calendar_for "values_#{field_id}_2" %>
+                  </span>
+                  <span class="span_values_<%= field_id %>">
+                    <%= text_field_tag "#{filter_attr}v[#{field}][]",
+                                       query.value_for(field),
+                                       :size => 3,
+                                       :class => "values_#{field_id}" %>
+                    <%= l(:label_day_plural) %>
+                  </span>
+                <% when :string, :text %>
+                  <span class="span_values_<%= field_id %>">
+                    <%= text_field_tag "#{filter_attr}v[#{field}][]",
+                                       query.value_for(field),
+                                       :class => "values_#{field_id}",
+                                       :id => "values_#{field_id}",
+                                       :size => 30 %>
+                  </span>
+                <% when :integer, :float %>
+                  <span class="span_values_<%= field_id %>">
+                    <%= text_field_tag "#{filter_attr}v[#{field}][]",
+                                       query.value_for(field),
+                                       :class => "values_#{field_id}",
+                                       :id => "values_#{field_id}_1",
+                                       :size => 6 %>
+                  </span>
+                  <span class="span_values_<%= field_id %>">
+                    <%= text_field_tag "#{filter_attr}v[#{field}][]",
+                                       query.value_for(field, 1),
+                                       :class => "values_#{field_id}",
+                                       :id => "values_#{field_id}_2",
+                                       :size => 6 %>
+                  </span>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+    <td class="add-filter">
+      <%= label_tag("#{series_id}_add_filter_select", l(:label_filter_add)) %>
+      <%= select_tag "#{series_id}_add_filter_select",
+                     query_options_for_select(query),
+                     :class => "add_series_filter",
+                     :name => nil %>
+    </td>
+  </tr>
+</table>
+<%= hidden_field_tag "#{filter_attr}f[]", "" %>
+<%= javascript_tag 'Event.observe(window,"load",apply_filters_observer);' %>
