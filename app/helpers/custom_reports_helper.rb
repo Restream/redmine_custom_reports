@@ -24,7 +24,7 @@ module CustomReportsHelper
   end
 
   def width_style_for_series(custom_report)
-    if custom_report.multi_series?
+    if custom_report.multi_series? || custom_report.series.count < 2
       "width:100%;"
     else
       w = [800 / custom_report.series.count, 300].max

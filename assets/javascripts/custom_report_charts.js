@@ -28,22 +28,6 @@ jQuery(document).ready(function($){
               return chart;
             });
 
-  //          var svg_container = jQuery('#custom-report');
-  //          svg_container.empty();
-  //
-  //          for (var i = 0; i < info.series_count; i++) {
-  //            var span_width = (100 / info.series_count - 5) + '%';
-  //            var tile_content = '<div id="chart_' + i +
-  //                '" style="width:' + span_width +
-  //                ';" class="series-tile"><svg></svg></div>';
-  //            var series = [data[i]];
-  //            var tile = jQuery(tile_content).appendTo(svg_container);
-  //            svg = d3.select(tile[0]).select("svg");
-  //
-  //            addPieChart('#chart_' + i + " svg", series);
-  //
-  //          }
-
             break;
 
           case "donut":
