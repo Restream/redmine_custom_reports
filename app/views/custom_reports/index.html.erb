@@ -15,27 +15,28 @@
         <th><%= l(:field_name) %></th>
         <th><%= l(:field_description) %></th>
         <th><%= l(:field_chart_type) %></th>
-        <th><%= l(:field_is_public) %></th>
+        <% if User.current.allowed_to?(:manage_custom_reports, @project) %>
+          <th><%= l(:field_is_public) %></th>
+        <% end %>
         <th></th>
       </thead>
       <tbody>
         <% @custom_reports.each do |custom_report| %>
           <tr>
             <td>
-              <%= link_to custom_report.name, 
-                          { :controller => 'custom_reports', 
-                            :action => 'show', 
+              <%= link_to custom_report.name,
+                          { :controller => 'custom_reports',
+                            :action => 'show',
                             :project_id => @project,
                             :id => custom_report.id } %><br />
             </td>
             <td><%= custom_report.description %></td>
             <td><%= custom_report.chart_type %></td>
-            <td><%= custom_report.is_public %></td>
+            <% if User.current.allowed_to?(:manage_custom_reports, @project) %>
+              <td><%= custom_report.is_public %></td>
+            <% end %>
             <td>
-              <% if (custom_report.is_public && 
-                        User.current.allowed_to?(:manage_public_custom_reports, @project)) ||
-                    (!custom_report.is_public && 
-                        User.current.allowed_to?(:manage_custom_reports, @project)) %>
+              <% if custom_report.allowed_to_manage? %>
                 <%= link_to(l(:button_edit),
                       edit_project_custom_report_path(@project, custom_report),
                       :class => 'icon icon-edit') %>

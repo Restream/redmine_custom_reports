@@ -3,7 +3,9 @@ class CustomReportsController < ApplicationController
 
   before_filter :find_project_by_project_id
   before_filter :authorize
-  before_filter :find_custom_reports
+  before_filter :find_custom_reports, :only => [:index, :show, :new, :edit]
+  before_filter :find_custom_report, :only => [:show, :edit, :update, :destroy]
+  before_filter :authorize_to_manage, :only => [:edit, :update, :destroy]
 
   helper :queries
   include QueriesHelper
@@ -12,19 +14,20 @@ class CustomReportsController < ApplicationController
   end
 
   def show
-    @custom_report = @project.custom_reports.visible.find(params[:id])
   end
 
   def new
     @custom_report = @project.custom_reports.build
+    @custom_report.series.build
   end
 
   def create
     @custom_report = @project.custom_reports.build(params[:custom_report])
     @custom_report.user = User.current
-    @custom_report.is_public = false unless User.current.allowed_to?(:manage_public_custom_reports, @project) || User.current.admin?
-
-    grab_filters_from_params(@custom_report)
+    unless User.current.allowed_to?(:manage_public_custom_reports, @project) ||
+           User.current.admin?
+      @custom_report.is_public = false
+    end
 
     if @custom_report.save
       redirect_to url_for(
@@ -37,14 +40,14 @@ class CustomReportsController < ApplicationController
   end
 
   def edit
-    @custom_report = @project.custom_reports.visible.find(params[:id])
+    @custom_report.series.build if @custom_report.series.empty?
   end
 
   def update
-    @custom_report = @project.custom_reports.visible.find(params[:id])
-    @custom_report.is_public = false unless User.current.allowed_to?(:manage_public_custom_reports, @project) || User.current.admin?
-
-    grab_filters_from_params(@custom_report)
+    unless User.current.allowed_to?(:manage_public_custom_reports, @project) ||
+           User.current.admin?
+      @custom_report.is_public = false
+    end
 
     if @custom_report.update_attributes(params[:custom_report])
       redirect_to url_for(
@@ -57,7 +60,6 @@ class CustomReportsController < ApplicationController
   end
 
   def destroy
-    @custom_report = @project.custom_reports.visible.find(params[:id])
     if @custom_report.destroy
       flash[:notice] = l(:message_custom_reports_destroyed)
     else
@@ -75,9 +77,11 @@ class CustomReportsController < ApplicationController
     @public_custom_reports = grouped_reports[true]
   end
 
-  def grab_filters_from_params(custom_report)
-    @query = custom_report.query.clone
-    build_query_from_params
-    custom_report.filters = @query.filters
+  def find_custom_report
+    @custom_report = @project.custom_reports.visible.find(params[:id])
+  end
+
+  def authorize_to_manage
+    @custom_report.allowed_to_manage? || deny_access
   end
 end

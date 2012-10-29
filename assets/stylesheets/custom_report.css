@@ -1,0 +1,9 @@
+.custom-report {
+  width: 100%;
+}
+
+.custom-report-chart {
+  margin: 10px;
+  float: left;
+  height: 300px;
+}

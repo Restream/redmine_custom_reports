@@ -1,8 +1,16 @@
-<%= render :partial => "header_common" %>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'custom_report', :plugin => 'redmine_custom_reports' %>
+  <%= stylesheet_link_tag 'nv.d3.css', :plugin => 'redmine_custom_reports' %>
+  <%= javascript_include_tag 'd3.v2.js', :plugin => 'redmine_custom_reports' %>
+  <%= javascript_include_tag 'nv.d3.js', :plugin => 'redmine_custom_reports' %>
+  <%= javascript_include_tag 'jquery-1.8.2.min.js', :plugin => 'redmine_custom_reports' %>
+  <%= javascript_include_tag 'jquery-noconflict.js', :plugin => 'redmine_custom_reports' %>
+  <%= javascript_include_tag 'custom_report_charts', :plugin => 'redmine_custom_reports' %>
+<% end %>
 
-<% if User.current.allowed_to?(:manage_custom_reports, @project) %>
+<% if @custom_report.allowed_to_manage? %>
   <div class="contextual">
-    
+
     <%= link_to(l(:button_edit),
           edit_project_custom_report_path(@project, @custom_report),
           :class => 'icon icon-edit') %>
@@ -15,13 +23,29 @@
   </div>
 <% end %>
 
-<h2><%=h @custom_report.name %></h2>
+<h2><span id="testw"></span> <%=h @custom_report.name %></h2>
 
 <p><%= @custom_report.description %></p>
 
-<%= chart_tag(@custom_report) %>
-
-<%= javascript_include_tag "custom_report", :plugin => 'redmine_custom_reports' %>
+<% content_tag :div, :class => "custom-report",
+                "data-custom_report_info" => @custom_report.info.to_json do %>
+  <% if @custom_report.multi_series? %>
+    <% content_tag :div, :class => "custom-report-chart",
+                   :style => width_style_for_series(@custom_report),
+                   "data-chart_data" => @custom_report.data.to_json do %>
+      <svg/>
+    <% end %>
+  <% else %>
+    <% @custom_report.series.each do |series| %>
+      <% content_tag :div, :class => "custom-report-chart",
+                     :style => width_style_for_series(@custom_report),
+                      "data-chart_data" => [series.data].to_json do %>
+        <h4><%= series.name %></h4>
+        <svg/>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
 
 <% content_for :sidebar do %>
     <%= render :partial => 'sidebar' %>

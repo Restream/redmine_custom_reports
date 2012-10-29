@@ -1,25 +1,23 @@
 class CustomReport < ActiveRecord::Base
   unloadable
 
-  LINE_CHART = 'line'
-  DONUT_CHART = 'donut'
-
-  CHART_TYPES = [LINE_CHART, DONUT_CHART]
+  CHART_TYPES = %w(pie donut bar horizontal_bar stacked_bar)
+  MULTI_SERIES = %w(horizontal_bar stacked_bar)
 
   belongs_to :project
   belongs_to :user
-
-  serialize :filters
+  has_many :series, :class_name => "CustomReportSeries", :order => "name"
 
   validates_presence_of :project
   validates_presence_of :user
-  validates_presence_of :is_public
   validates_presence_of :name
   validates_presence_of :group_by
   validates_presence_of :null_text
   validates_inclusion_of :chart_type, :in => CHART_TYPES
 
-  named_scope :visible, lambda { |*args| 
+  accepts_nested_attributes_for :series, :allow_destroy => true
+
+  named_scope :visible, lambda { |*args|
       user = args.shift || User.current
       user_id = user.logged? ? user.id : 0
       {
@@ -27,56 +25,48 @@ class CustomReport < ActiveRecord::Base
       }
   }
 
+  def groupable_columns
+    QueryExt.new().groupable_columns.keep_if do |col|
+      if col.respond_to? :custom_field
+        col.custom_field.is_for_all ||
+            project.all_issue_custom_fields.include?(col.custom_field)
+      else
+        true
+      end
+    end
+  end
+
+  def info
+    {
+        :chart_type => chart_type,
+        :group_by_caption => group_by_column.try(:caption),
+        :series_count => series.count,
+        :multi_series => multi_series?
+    }
+  end
+
+  def multi_series?
+    MULTI_SERIES.include?(chart_type)
+  end
+
   def data
-    case chart_type
-
-    when LINE_CHART
-      line_data
-
-    when DONUT_CHART
-      donut_data
-
+    if multi_series?
+      # all series must have the same keys
+      keys = series.map { |s| s.data_hash.keys }.flatten.uniq
+      series.map { |s| s.data(keys) }
     else
-      raise "unknown chart_type '#{chart_type}'"
+      series.map { |s| s.data }
     end
   end
 
-  def query
-    @query ||= build_query
+  def allowed_to_manage?(user = User.current)
+    user.allowed_to?(
+        is_public? ? :manage_public_custom_reports : :manage_custom_reports,
+        project
+    )
   end
 
-  def xkey
-    :label
-  end
-
-  def ykeys
-    [:value]
-  end
-
-  def labels
-    [query.group_by_column.caption]
-  end
-
-  private
-
-  def donut_data
-    query.issue_count_by_group.map do |k,v| 
-      { :label => (k || null_text).to_s, :value => v }
-    end
-  end
-
-  def line_data
-    query.issue_count_by_group.map do |k,v| 
-      { :label => (k || null_text).to_s, :value => v }
-    end
-  end
-
-  def build_query
-    Query.new(
-      :name => name, 
-      :filters => filters, 
-      :group_by => group_by, 
-      :is_public => true, 
-      :project => project)
+  def group_by_column
+    groupable_columns.detect { |col| col.name.to_s == group_by }
   end
 end
