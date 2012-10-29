@@ -13,26 +13,33 @@ class CustomReportsControllerTest < ActionController::TestCase
     @project.enable_module! :custom_reports
 
     # admin
-    @user = User.find(2)
+    @user = User.find(1)
     User.current = @user
 
     @request = ActionController::TestRequest.new
     @request.session[:user_id] = @user.id
+
+    @custom_report = @project.custom_reports.create!(
+        :name => 'name',
+        :description => 'description',
+        :group_by => 'status',
+        :user_id => @user.id,
+        :is_public => true,
+        :chart_type => 'pie',
+        :series_attributes => [{
+            :name => 'series1',
+            :filters => {}
+        }]
+    )
   end
 
-  def test_show_custom_reports_for_user
-    @user = User.find(2)
-    User.current = @user
-    @request.session[:user_id] = @user.id
-    user_role = Role.find(1)
-    user_role.add_permission! :manage_custom_reports
-
+  def test_show_all_custom_reports
     get :index, :project_id => @project.name
     assert_response :success
   end
 
-  def test_show_custom_reports
-    get :index, :project_id => @project.name
+  def test_show_custom_report
+    get :new, :project_id => @project.name, :id => @custom_report.id
     assert_response :success
   end
 
@@ -42,55 +49,95 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_create_custom_report
+    series_name = 'series2-1'
+    series_filters = { "status_id" => { :operator => "=", :values => ["1"] } }
     attrs = {
-        :role_before_id => @role_before.id,
-        :role_after_id => @role_after.id
+        :name => 'name2',
+        :description => 'description2',
+        :group_by => 'status',
+        :user_id => @user.id,
+        :is_public => true,
+        :chart_type => 'donut',
+        :series_attributes => {
+            0 => {
+                :name => series_name,
+                :flt => {
+                  :f => ['status_id'],
+                  :op => { :status_id => '=' },
+                  :v => { :status_id => ["1"] }
+                }
+            }
+        }
     }
     post :create, :project_id => @project.name, :custom_report => attrs
     assert_response :redirect
     custom_report = @project.custom_reports.find(:first, :conditions => {
-        :role_before_id => attrs[:role_before_id]
+        :name => attrs[:name]
     })
     assert custom_report
-    assert_equal attrs[:role_after_id], custom_report.role_after_id
+    assert_equal attrs[:description], custom_report.description
+    assert_equal attrs[:group_by], custom_report.group_by
+    assert_equal attrs[:user_id], custom_report.user_id
+    assert_equal attrs[:is_public], custom_report.is_public
+    assert_equal attrs[:chart_type], custom_report.chart_type
+
+    assert_equal 1, custom_report.series.count
+    series = custom_report.series.first
+    assert_equal series_name, series.name
+    assert_equal series_filters, series.filters
   end
 
   def test_show_edit_custom_report
-    custom_report = CustomReport.create!({
-        :project_id => @project.id,
-        :role_before_id => @role_before.id,
-        :role_after_id => @role_after.id
-    })
-    get :edit, :project_id => @project.name, :id => custom_report.id
+    get :edit, :project_id => @project.name, :id => @custom_report.id
     assert_response :success
   end
 
   def test_update_custom_report
-    custom_report = @project.custom_reports.create!({
-        :project_id => @project.id,
-        :role_before_id => @role_before.id,
-        :role_after_id => 5
-    })
+    old_series = @custom_report.series.first
+    series_name = 'series2-1'
+    series_filters = { "status_id" => { :operator => "=", :values => ["1"] } }
     attrs = {
-        :role_before_id => @role_before.id,
-        :role_after_id => @role_after.id
+        :name => 'name2',
+        :description => 'description2',
+        :group_by => 'status',
+        :user_id => @user.id,
+        :is_public => true,
+        :chart_type => 'donut',
+        :series_attributes => {
+            0 => {
+                :id => old_series.id,
+                :_destroy => true
+            },
+            1 => {
+                :name => series_name,
+                :flt => {
+                    :f => ['status_id'],
+                    :op => { :status_id => '=' },
+                    :v => { :status_id => ["1"] }
+                }
+            }
+        }
     }
-    put :update, :project_id => @project.name, :id => custom_report.id,
+    put :update, :project_id => @project.name, :id => @custom_report.id,
         :custom_report => attrs
     assert_response :redirect
-    custom_report.reload
-    assert_equal attrs[:role_after_id], custom_report.role_after_id
+    @custom_report.reload
+    assert_equal attrs[:description], @custom_report.description
+    assert_equal attrs[:group_by], @custom_report.group_by
+    assert_equal attrs[:user_id], @custom_report.user_id
+    assert_equal attrs[:is_public], @custom_report.is_public
+    assert_equal attrs[:chart_type], @custom_report.chart_type
+
+    assert_equal 1, @custom_report.series.count
+    series = @custom_report.series.first
+    assert_equal series_name, series.name
+    assert_equal series_filters, series.filters
   end
 
   def test_destroy_custom_report
-    custom_report = CustomReport.create!({
-        :project_id => @project.id,
-        :role_before_id => @role_before.id,
-        :role_after_id => @role_after.id
-    })
-    delete :destroy, :project_id => @project.name, :id => custom_report.id
+    delete :destroy, :project_id => @project.name, :id => @custom_report.id
     assert_response :redirect
-    custom_report =  CustomReport.find_by_id custom_report.id
+    custom_report = CustomReport.find_by_id @custom_report.id
     assert_nil custom_report
   end
 end
