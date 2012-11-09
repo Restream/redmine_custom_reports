@@ -7,6 +7,7 @@ ru:
   label_custom_report_edit: "Изменение отчета"
   label_series_filters: "Фильтры рядов данных"
 
+  label_chart_type_undev_pie: "Undev Кольцевая диаграмма"
   label_chart_type_pie: "Круговая диаграмма"
   label_chart_type_donut: "Кольцевая диаграмма"
   label_chart_type_bar: "Столбчатая диаграмма"

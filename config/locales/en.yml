@@ -7,6 +7,7 @@ en:
   label_custom_report_edit: "Edit custom report"
   label_series_filters: "Series filters"
 
+  label_chart_type_undev_pie: "Undev Pie"
   label_chart_type_pie: "Pie"
   label_chart_type_donut: "Donut"
   label_chart_type_bar: "Discrete Bar"

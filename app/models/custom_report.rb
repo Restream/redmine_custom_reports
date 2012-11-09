@@ -1,7 +1,7 @@
 class CustomReport < ActiveRecord::Base
   unloadable
 
-  CHART_TYPES = %w(pie donut bar horizontal_bar stacked_bar)
+  CHART_TYPES = %w(undev_pie pie donut bar horizontal_bar stacked_bar)
   MULTI_SERIES = %w(horizontal_bar stacked_bar)
 
   belongs_to :project

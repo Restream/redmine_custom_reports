@@ -10,6 +10,26 @@ jQuery(document).ready(function($){
 
         switch (info.chart_type) {
 
+          case "undev_pie":
+
+            nv.addGraph(function() {
+              var chart = nv.models.undevPieChart()
+                  .x(function(d) { return d.label })
+                  .y(function(d) { return d.value })
+                  .showLabels(true);
+
+              svg.datum(data)
+                  .transition()
+                  .duration(1200)
+                  .call(chart);
+
+              nv.utils.windowResize(chart.update);
+
+              return chart;
+            });
+
+            break;
+
           case "pie":
 
             nv.addGraph(function() {
