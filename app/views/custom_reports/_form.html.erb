@@ -1,6 +1,10 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'jquery-1.8.2.min.js', :plugin => 'redmine_custom_reports' %>
-  <%= javascript_include_tag 'jquery-noconflict.js', :plugin => 'redmine_custom_reports' %>
+  <script type="text/javascript">
+    if(typeof(jQuery) == 'undefined') {
+      document.write("<%= escape_javascript(javascript_include_tag('jquery-1.8.2.min.js', :plugin => 'redmine_custom_reports')) %>");
+      document.write("<%= escape_javascript(javascript_include_tag('jquery-noconflict.js', :plugin => 'redmine_custom_reports')) %>");
+    }
+  </script>
   <%= javascript_include_tag 'custom_report_edit.js', :plugin => 'redmine_custom_reports' %>
 <% end %>
 

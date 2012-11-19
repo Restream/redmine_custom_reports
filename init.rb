@@ -16,7 +16,7 @@ Redmine::Plugin.register :redmine_custom_reports do
   name 'Redmine Custom Reports (with charts) plugin'
   author 'Danil Tashkinov'
   description 'Redmine plugin for custom reports with charts'
-  version '0.0.7'
+  version '0.0.8'
   url 'https://github.com/nodecarter/redmine_custom_reports'
   author_url 'https://github.com/Undev'
 
