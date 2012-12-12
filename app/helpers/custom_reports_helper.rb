@@ -3,6 +3,10 @@ module CustomReportsHelper
     object_name.gsub(/\]\[|[^-a-zA-Z0-9:.]/, "_").sub(/_$/, "")
   end
 
+  def operators_for_select(filter_type)
+    Query.operators_by_filter_type[filter_type].collect {|o| [l(Query.operators[o]), o]}
+  end
+
   def query_options_for_select(query)
     options = query.sorted_available_filters.collect do |field|
       unless query.has_filter?(field[0])
