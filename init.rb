@@ -1,7 +1,6 @@
 require 'redmine'
-require 'dispatcher'
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   require_dependency 'project'
   unless Project.included_modules.include? RedmineCustomReports::ProjectPatch
     Project.send :include, RedmineCustomReports::ProjectPatch

@@ -1,5 +1,5 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :projects do |project|
-    project.resources :custom_reports
+RedmineApp::Application.routes.draw do
+  resources :projects do
+    resources :custom_reports
   end
 end

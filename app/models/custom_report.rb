@@ -17,12 +17,10 @@ class CustomReport < ActiveRecord::Base
 
   accepts_nested_attributes_for :series, :allow_destroy => true
 
-  named_scope :visible, lambda { |*args|
+  scope :visible, lambda { |*args|
       user = args.shift || User.current
       user_id = user.logged? ? user.id : 0
-      {
-        :conditions => ["(#{table_name}.is_public = ? OR #{table_name}.user_id = ?)", true, user_id]
-      }
+      where "(#{table_name}.is_public = ? OR #{table_name}.user_id = ?)", true, user_id
   }
 
   def groupable_columns
