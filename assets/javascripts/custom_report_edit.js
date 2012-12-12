@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
     var values = $('.values_' + field_id);
     for(var i = 0; i < values.length; i++) {
       var value = values.eq(i);
-      if (indexes.include(i)) {
+      if (indexes.indexOf(i) >= 0) {
         value.removeAttr('disabled');
         value.closest('span').show();
       } else {

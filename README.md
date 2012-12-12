@@ -1,6 +1,6 @@
 # Redmine Custom Reports (with charts) plugin
 
-Redmine plugin to create project reports using [d3.js](http://d3js.org/) charts (with using [NVD3](http://nvd3.com/)). The data for the report - the number of filtered issues grouped by a column.
+Redmine plugin to create project reports using [d3.js](http://d3js.org/) charts (with using [NVD3](http://nvd3.org/)). The data for the report - the number of filtered issues grouped by a column.
 
 You can use multiple data series. Issues filtered by ordinary redmine filters.
 
@@ -12,12 +12,26 @@ There are public and private custom reports. Permission "View custom reports" al
 
 ## Installing a plugin
 
-Follow the plugin installation procedure at http://www.redmine.org/projects/redmine/wiki/Plugins#Installing-a-plugin
+1. Copy plugin directory into #{RAILS_ROOT}/plugins.
+If you are downloading the plugin directly from GitHub,
+you can do so by changing into your plugin directory and issuing a command like
 
-Restart the application and go to one of your project settings.
-Click on the Modules tab. You should see the "Custom reports" module at the end of the modules list.
+        git clone git://github.com/nodecarter/redmine_custom_reports.git
+
+2. Run the following command to upgrade your database (make a db backup before).
+
+        bundle exec rake redmine:plugins:migrate RAILS_ENV=production
+
+3. Restart Redmine
+
+4. Go to one of your project settings. Click on the Modules tab.
+You should see the "Custom reports" module at the end of the modules list.
 Enable plugin at project level. Now you will see "Custom report" tab at the project menu.
 
 ## Screenshot
 
 ![Sample](https://github.com/nodecarter/redmine_custom_reports/raw/master/screenshot.png)
+
+## Compatibility
+
+This version supports only redmine 2.x. See [redmine-1.x](https://github.com/nodecarter/redmine_custom_reports/tree/redmine-1.x) branch for Redmine 1.x.

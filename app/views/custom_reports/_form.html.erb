@@ -8,7 +8,7 @@
   <%= javascript_include_tag 'custom_report_edit.js', :plugin => 'redmine_custom_reports' %>
 <% end %>
 
-<% labelled_form_for custom_report,
+<%= labelled_form_for custom_report,
     :url => url,
     :html => { :id => 'custom-report-form' } do |f| %>
 
@@ -55,7 +55,7 @@
       </p>
     </div>
 
-  <% f.fields_for :series do |series_fields| %>
+  <%= f.fields_for :series do |series_fields| %>
     <%= render :partial => 'series', :locals => { :f => series_fields } %>
   <% end %>
   <%= link_to_add_custom_report_series l(:message_add_custom_report_series), f %>

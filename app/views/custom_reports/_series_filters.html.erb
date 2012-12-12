@@ -10,7 +10,7 @@
              field_id = "#{series_id}_#{field}"
              options = filter[1]
           %>
-          <tr <%= 'style="display:none;"' unless query.has_filter?(field) %>
+          <tr <%= "style=\"display:none\"".html_safe unless query.has_filter?(field) %>
               id="tr_<%= field_id %>" class="filter"
               data-field_id="<%= field_id %>">
 
@@ -34,7 +34,6 @@
                                  operators_for_select(options[:type]),
                                  query.operator_for(field)),
                              :id => "operators_#{field_id}",
-                             :onchange => "toggle_operator('#{field_id}');",
                              :class => "toggle_series_filter_operator" %>
             </td>
 
@@ -117,4 +116,3 @@
   </tr>
 </table>
 <%= hidden_field_tag "#{filter_attr}f[]", "" %>
-<%= javascript_tag 'Event.observe(window,"load",apply_filters_observer);' %>
