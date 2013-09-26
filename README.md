@@ -1,4 +1,6 @@
-# Redmine Custom Reports (with charts) plugin
+# Redmine Custom Reports Plugin (with charts)
+
+[![Build Status](https://travis-ci.org/nodecarter/redmine_custom_reports.png?branch=master)](https://travis-ci.org/nodecarter/redmine_custom_reports)
 
 Redmine plugin to create project reports using [d3.js](http://d3js.org/) charts (with using [NVD3](http://nvd3.org/)). The data for the report - the number of filtered issues grouped by a column.
 
@@ -34,4 +36,4 @@ Enable plugin at project level. Now you will see "Custom report" tab at the proj
 
 ## Compatibility
 
-This version supports only redmine 2.x. See [redmine-1.x](https://github.com/nodecarter/redmine_custom_reports/tree/redmine-1.x) branch for Redmine 1.x.
+This version supports only redmine 2.x.
