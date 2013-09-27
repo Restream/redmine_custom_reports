@@ -1,6 +1,7 @@
 # Redmine Custom Reports Plugin (with charts)
 
 [![Build Status](https://travis-ci.org/nodecarter/redmine_custom_reports.png?branch=master)](https://travis-ci.org/nodecarter/redmine_custom_reports)
+[![Code Climate](https://codeclimate.com/github/nodecarter/redmine_custom_reports.png)](https://codeclimate.com/github/nodecarter/redmine_custom_reports)
 
 Redmine plugin to create project reports using [d3.js](http://d3js.org/) charts (with using [NVD3](http://nvd3.org/)). The data for the report - the number of filtered issues grouped by a column.
 
