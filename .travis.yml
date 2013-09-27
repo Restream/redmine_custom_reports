@@ -2,7 +2,7 @@ language: ruby
 
 services:
   - mysql
-  - postgres
+  - postgresql
 
 rvm:
   - 1.9.3
@@ -12,9 +12,9 @@ env:
   - REDMINE_VER=2.1.6 DB=mysql
   - REDMINE_VER=2.2.4 DB=mysql
   - REDMINE_VER=2.3.3 DB=mysql
-  - REDMINE_VER=2.1.6 DB=postgres
-  - REDMINE_VER=2.2.4 DB=postgres
-  - REDMINE_VER=2.3.3 DB=postgres
+  - REDMINE_VER=2.1.6 DB=postgresql
+  - REDMINE_VER=2.2.4 DB=postgresql
+  - REDMINE_VER=2.3.3 DB=postgresql
 
 matrix:
   exclude:
@@ -23,9 +23,9 @@ matrix:
     - rvm: 2.0.0
       env: REDMINE_VER=2.2.4 DB=mysql
     - rvm: 2.0.0
-      env: REDMINE_VER=2.1.6 DB=postgres
+      env: REDMINE_VER=2.1.6 DB=postgresql
     - rvm: 2.0.0
-      env: REDMINE_VER=2.2.4 DB=postgres
+      env: REDMINE_VER=2.2.4 DB=postgresql
 
 before_install:
   - export PLUGIN_NAME=redmine_custom_reports

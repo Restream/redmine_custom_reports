@@ -1,4 +1,4 @@
-class QueryExt < Query
+class QueryExt < defined?(IssueQuery) ? IssueQuery : Query
   unloadable
 
   def initialize(*args)
