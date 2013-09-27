@@ -34,17 +34,17 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_show_all_custom_reports
-    get :index, :project_id => @project.name
+    get :index, :project_id => @project.identifier
     assert_response :success
   end
 
   def test_show_custom_report
-    get :new, :project_id => @project.name, :id => @custom_report.id
+    get :new, :project_id => @project.identifier, :id => @custom_report.id
     assert_response :success
   end
 
   def test_show_new_custom_report
-    get :new, :project_id => @project.name
+    get :new, :project_id => @project.identifier
     assert_response :success
   end
 
@@ -69,7 +69,7 @@ class CustomReportsControllerTest < ActionController::TestCase
             }
         }
     }
-    post :create, :project_id => @project.name, :custom_report => attrs
+    post :create, :project_id => @project.identifier, :custom_report => attrs
     assert_response :redirect
     custom_report = @project.custom_reports.find(:first, :conditions => {
         :name => attrs[:name]
@@ -88,7 +88,7 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_show_edit_custom_report
-    get :edit, :project_id => @project.name, :id => @custom_report.id
+    get :edit, :project_id => @project.identifier, :id => @custom_report.id
     assert_response :success
   end
 
@@ -118,7 +118,7 @@ class CustomReportsControllerTest < ActionController::TestCase
             }
         }
     }
-    put :update, :project_id => @project.name, :id => @custom_report.id,
+    put :update, :project_id => @project.identifier, :id => @custom_report.id,
         :custom_report => attrs
     assert_response :redirect
     @custom_report.reload
@@ -135,7 +135,7 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_custom_report
-    delete :destroy, :project_id => @project.name, :id => @custom_report.id
+    delete :destroy, :project_id => @project.identifier, :id => @custom_report.id
     assert_response :redirect
     custom_report = CustomReport.find_by_id @custom_report.id
     assert_nil custom_report
