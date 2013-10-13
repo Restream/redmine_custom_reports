@@ -4,11 +4,9 @@
   <tr>
     <td>
       <table>
-        <% query.sorted_available_filters.each do |filter| %>
+        <% query.available_filters.each do |field, options| %>
           <%
-             field = filter[0]
              field_id = "#{series_id}_#{field}"
-             options = filter[1]
           %>
           <tr <%= "style=\"display:none\"".html_safe unless query.has_filter?(field) %>
               id="tr_<%= field_id %>" class="filter"
@@ -21,7 +19,7 @@
                                 :id => "cb_#{field_id}",
                                 :class => "toggle_series_filter" %>
               <label for="cb_<%= field_id %>">
-                <%= filter[1][:name] || l(("field_"+field.to_s.gsub(/\_id$/, "")).to_sym) %>
+                <%= options[:name] || l(("field_"+field.to_s.gsub(/\_id$/, "")).to_sym) %>
               </label>
             </td>
 

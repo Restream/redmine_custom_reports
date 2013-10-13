@@ -8,12 +8,12 @@ module CustomReportsHelper
   end
 
   def query_options_for_select(query)
-    options = query.sorted_available_filters.collect do |field|
-      unless query.has_filter?(field[0])
-        [field[1][:name] || l(("field_"+field[0].to_s.gsub(/_id$/, "")).to_sym), field[0]]
+    options = query.available_filters.collect do |field, options|
+      unless query.has_filter?(field)
+        [options[:name] || l(('field_' + field.to_s.gsub(/_id$/, '')).to_sym), field]
       end
     end
-    options = [["", ""]] + options.compact
+    options = [['', '']] + options.compact
     options_for_select(options)
   end
 

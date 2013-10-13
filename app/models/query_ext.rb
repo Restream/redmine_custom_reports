@@ -1,4 +1,6 @@
-class QueryExt < defined?(IssueQuery) ? IssueQuery : Query
+ISSUE_QUERY_CLASS = Redmine::VERSION.to_s >= '2.3.0' ? IssueQuery : Query
+
+class QueryExt < ISSUE_QUERY_CLASS
   unloadable
 
   def initialize(*args)
@@ -10,10 +12,6 @@ class QueryExt < defined?(IssueQuery) ? IssueQuery : Query
 
   def model_name
     superclass.model_name
-  end
-
-  def sorted_available_filters
-    available_filters.sort { |a, b| a[1][:order] <=> b[1][:order] }
   end
 
   private
