@@ -13,7 +13,7 @@ class CreateCustomReportSeries < ActiveRecord::Migration
   end
 
   def self.down
-    if table_exists?
+    if table_exists? :custom_report_series
       remove_index :custom_report_series, :custom_report_id
       drop_table :custom_report_series
     end
