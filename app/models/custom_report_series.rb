@@ -42,7 +42,7 @@ class CustomReportSeries < ActiveRecord::Base
       :name => name,
       :filters => filters,
       :group_by => custom_report.try(:group_by),
-      :is_public => true,
+      :visibility => ::Query::VISIBILITY_PUBLIC,
       :project => custom_report.try(:project))
   end
 
