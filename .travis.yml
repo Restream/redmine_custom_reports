@@ -32,11 +32,17 @@ matrix:
     - rvm: 2.0.0
       env: REDMINE_VER=2.2.4 DB=mysql
       gemfile: $REDMINE_PATH/Gemfile
+    - rvm: 1.8.7
+      env: REDMINE_VER=2.3.3 DB=mysql
+      gemfile: $REDMINE_PATH/Gemfile
     - rvm: 2.0.0
       env: REDMINE_VER=2.1.6 DB=postgresql
       gemfile: $REDMINE_PATH/Gemfile
     - rvm: 2.0.0
       env: REDMINE_VER=2.2.4 DB=postgresql
+      gemfile: $REDMINE_PATH/Gemfile
+    - rvm: 1.8.7
+      env: REDMINE_VER=2.3.3 DB=postgresql
       gemfile: $REDMINE_PATH/Gemfile
 
 before_install:
