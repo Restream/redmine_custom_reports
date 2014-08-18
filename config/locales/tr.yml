@@ -1,0 +1,27 @@
+# Adnan Topcu
+tr:
+  label_custom_report_plural: "Özel Raporlar"
+  label_custom_report_view_all: "Tüm özel raporları görüntüleme"
+  label_custom_report_new: "Yeni özel rapor oluştur"
+  label_custom_report_public_list: "Ortak özel raporlar"
+  label_custom_report_own_list: "Kendi özel raporlarım"
+  label_custom_report_edit: "Özel rapor düzenleme"
+  label_series_filters: "Seri filtreleri"
+
+  label_chart_type_undev_pie: "Undev Pie"
+  label_chart_type_pie: "Pie"
+  label_chart_type_donut: "Donut"
+  label_chart_type_bar: "Discrete Bar"
+  label_chart_type_horizontal_bar: "Horizontal Bar"
+  label_chart_type_stacked_bar: "Stacked Bar"
+
+  field_chart_type: "Grafik tipi"
+  field_null_text: "Boş değerleri için açıklama"
+  field_series_name: "Seri adı"
+
+  message_custom_reports_created: "Özel rapor başarıyla oluşturuldu"
+  message_custom_reports_updated: "Özel rapor başarıyla güncellendi"
+  message_custom_reports_destroyed: "Özel rapor başarıyla silindi"
+  message_cant_delete_last_series: "Özel rapor enaz bir seriye sahip olmalıdır!"
+  message_add_custom_report_series: "Yeni seri ekle"
+  message_remove_custom_report_series: "Seri kaldır"
