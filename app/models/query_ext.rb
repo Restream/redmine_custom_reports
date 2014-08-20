@@ -3,8 +3,13 @@ ISSUE_QUERY_CLASS = Redmine::VERSION.to_s >= '2.3.0' ? IssueQuery : Query
 class QueryExt < ISSUE_QUERY_CLASS
   unloadable
 
-  def initialize(*args)
-    super
+  def initialize(attributes = nil, options = {})
+    # deal with new visibility column
+    if options.has_key?(:is_visible) && Redmine::VERSION.to_s >= '2.4.0'
+      _is_visible = options.delete(:is_visible)
+      options[:visibility] = _is_visible ? Query::VISIBILITY_PUBLIC : Query::VISIBILITY_PRIVATE
+    end
+    super(attributes, options)
     available_columns.each do |col|
       make_groupable!(col) if groupable_ext?(col)
     end
