@@ -128,3 +128,12 @@ jQuery(document).ready(function($) {
   });
 
 });
+
+function toggle_multi_select(id) {
+  var select = $('#'+id);
+  if (select.attr('multiple')) {
+    select.removeAttr('multiple');
+  } else {
+    select.attr('multiple', true);
+  }
+}
