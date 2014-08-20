@@ -8,4 +8,5 @@
 
 .custom-report-chart svg {
   height: 500px;
+  overflow: visible;
 }
