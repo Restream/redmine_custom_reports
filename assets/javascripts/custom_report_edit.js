@@ -86,7 +86,7 @@ jQuery(document).ready(function($) {
     }
   }
 
-  $('.remove-custom-report-series').live('click', function(event){
+  $('body').on('click', '.remove-custom-report-series', function(event){
     var series_count = fieldset = $('fieldset[data-series_id]').length;
     if (series_count > 1) {
       var series_id = findSeriesId(this);
@@ -101,7 +101,7 @@ jQuery(document).ready(function($) {
     event.preventDefault();
   });
 
-  $('.add-custom-report-series').live('click', function(event){
+  $('body').on('click', '.add-custom-report-series', function(event){
     var id = $(this).data().id;
     var fields = $(this).data().fields;
     var time = new Date().getTime();
@@ -110,17 +110,17 @@ jQuery(document).ready(function($) {
     event.preventDefault();
   });
 
-  $('.toggle_series_filter').live('change', function(){
+  $('body').on('change', '.toggle_series_filter', function(){
     var field_id = findFieldId(this);
     toggleSeriesFilter(field_id);
   });
 
-  $('.toggle_series_filter_operator').live('change', function(){
+  $('body').on('change', '.toggle_series_filter_operator', function(){
     var field_id = findFieldId(this);
     toggleSeriesFilterOperator(field_id);
   });
 
-  $('.add_series_filter').live('change', addSeriesFilter);
+  $('body').on('change', '.add_series_filter', addSeriesFilter);
 
   $('[data-field_id]').each(function(){
     var field_id = $(this).data().field_id;
