@@ -1,0 +1,26 @@
+hu:
+  label_custom_report_plural: "Egyedi riportok"
+  label_custom_report_view_all: "Minden egyedi riport"
+  label_custom_report_new: "Egyedi riport létrehozása"
+  label_custom_report_public_list: "Nyilvános egyedi riportok"
+  label_custom_report_own_list: "Saját egyedi riportok"
+  label_custom_report_edit: "Egyedi riport szerkesztése"
+  label_series_filters: "Adatsor szűrés"
+
+  label_chart_type_undev_pie: "Undev Pie"
+  label_chart_type_pie: "Pie"
+  label_chart_type_donut: "Donut"
+  label_chart_type_bar: "Discrete Bar"
+  label_chart_type_horizontal_bar: "Horizontal Bar"
+  label_chart_type_stacked_bar: "Stacked Bar"
+
+  field_chart_type: "Diagram típusa"
+  field_null_text: "Hiányzó értékek címkéje"
+  field_series_name: "Adatsor neve"
+
+  message_custom_reports_created: "Az egyedi riport létrehozása sikeresen megtörtént"
+  message_custom_reports_updated: "Az egyedi riport frissítése sikeresen megtörtént"
+  message_custom_reports_destroyed: "Az egyedi riport törlése sikeresen megtörtént"
+  message_cant_delete_last_series: "Legalább egy adatsor meg kell adni!"
+  message_add_custom_report_series: "Új adatsor hozzáadása"
+  message_remove_custom_report_series: "Adatsor eltávolítása"
