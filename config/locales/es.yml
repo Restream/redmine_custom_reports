@@ -1,0 +1,26 @@
+es:
+  label_custom_report_plural: "Reportes"
+  label_custom_report_view_all: "Ver todos los reportes"
+  label_custom_report_new: "Crear nuevo reporte"
+  label_custom_report_public_list: "Reportes públicos"
+  label_custom_report_own_list: "Mis reportes"
+  label_custom_report_edit: "Editar reporte"
+  label_series_filters: "Serie de filtros"
+
+  label_chart_type_undev_pie: "Undev Pastel"
+  label_chart_type_pie: "Pastel"
+  label_chart_type_donut: "Dona"
+  label_chart_type_bar: "Barras"
+  label_chart_type_horizontal_bar: "Barras horizontales"
+  label_chart_type_stacked_bar: "Barras apiladas"
+
+  field_chart_type: "Tipo de gráfico"
+  field_null_text: "Texto para valores nulos"
+  field_series_name: "Nombre de serie"
+
+  message_custom_reports_created: "Reporte creado exitósamente"
+  message_custom_reports_updated: "Reporte actualizado exitósamente"
+  message_custom_reports_destroyed: "Reporte destruído exitósamente"
+  message_cant_delete_last_series: "Reporte debe tener al menos una serie !"
+  message_add_custom_report_series: "Agregar nueva serie"
+  message_remove_custom_report_series: "Remover nueva serie"
