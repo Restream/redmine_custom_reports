@@ -1,0 +1,26 @@
+pt-br:
+  label_custom_report_plural: "Relatórios personalizados"
+  label_custom_report_view_all: "Visualizar todos os relatórios personalizados"
+  label_custom_report_new: "Criar um novo relatório personalizado"
+  label_custom_report_public_list: "Relatórios públicos personalizados"
+  label_custom_report_own_list: "Meus relatórios personalizados"
+  label_custom_report_edit: "Editar um relatório personalizado"
+  label_series_filters: "Séries e filtros"
+
+  label_chart_type_undev_pie: "Rosca com valores"
+  label_chart_type_pie: "Pizza"
+  label_chart_type_donut: "Rosca"
+  label_chart_type_bar: "Barras Vertical"
+  label_chart_type_horizontal_bar: "Barras Horizontal"
+  label_chart_type_stacked_bar: "Barras agrupados"
+
+  field_chart_type: "Tipo de gráfico"
+  field_null_text: "Texto para valores nulos"
+  field_series_name: "Nomda da séria"
+
+  message_custom_reports_created: "Relatório personalizado criado com sucesso"
+  message_custom_reports_updated: "Relatório personalizado atualizado com sucesso"
+  message_custom_reports_destroyed: "Relatório personalizado removido com sucesso"
+  message_cant_delete_last_series: "Relatório personalizado deve ter pelo menos uma série!"
+  message_add_custom_report_series: "Adicionar uma nova séria"
+  message_remove_custom_report_series: "Remover séria nova" 
