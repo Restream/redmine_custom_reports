@@ -6,7 +6,7 @@ class CustomReport < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :user
-  has_many :series, :class_name => "CustomReportSeries", :order => "name"
+  has_many :series, -> { order("name") }, :class_name => "CustomReportSeries"
 
   validates_presence_of :project
   validates_presence_of :user
