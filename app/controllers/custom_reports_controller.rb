@@ -22,6 +22,7 @@ class CustomReportsController < ApplicationController
   end
 
   def create
+    params.require(:custom_report).permit!
     @custom_report = @project.custom_reports.build(params[:custom_report])
     @custom_report.user = User.current
     unless User.current.allowed_to?(:manage_public_custom_reports, @project) ||
@@ -49,6 +50,7 @@ class CustomReportsController < ApplicationController
       @custom_report.is_public = false
     end
 
+    params.require(:custom_report).permit!
     if @custom_report.update_attributes(params[:custom_report])
       redirect_to url_for(
           :controller => "custom_reports",

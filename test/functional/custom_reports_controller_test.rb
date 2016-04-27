@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 class CustomReportsControllerTest < ActionController::TestCase
   fixtures :projects, :trackers, :issue_statuses, :issues,
@@ -71,9 +71,7 @@ class CustomReportsControllerTest < ActionController::TestCase
     }
     post :create, :project_id => @project.identifier, :custom_report => attrs
     assert_response :redirect
-    custom_report = @project.custom_reports.find(:first, :conditions => {
-        :name => attrs[:name]
-    })
+    custom_report = @project.custom_reports.find_by_name( attrs[:name] )
     assert custom_report
     assert_equal attrs[:description], custom_report.description
     assert_equal attrs[:group_by], custom_report.group_by
