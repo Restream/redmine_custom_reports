@@ -5,44 +5,41 @@ services:
   - postgresql
 
 rvm:
-  - 1.8.7
   - 1.9.3
-  - 2.0.0
+  - 2.2.0
 
 gemfile:
   - $REDMINE_PATH/Gemfile
 
 env:
-  - REDMINE_VER=2.1.6 DB=mysql
-  - REDMINE_VER=2.2.4 DB=mysql
   - REDMINE_VER=2.3.3 DB=mysql
-  - REDMINE_VER=2.4.4 DB=mysql
-  - REDMINE_VER=2.5.0 DB=mysql
-  - REDMINE_VER=2.1.6 DB=postgresql
-  - REDMINE_VER=2.2.4 DB=postgresql
+  - REDMINE_VER=2.6.9 DB=mysql
+  - REDMINE_VER=3.2.1 DB=mysql
+
   - REDMINE_VER=2.3.3 DB=postgresql
-  - REDMINE_VER=2.4.4 DB=postgresql
-  - REDMINE_VER=2.5.0 DB=postgresql
+  - REDMINE_VER=2.6.9 DB=postgresql
+  - REDMINE_VER=3.2.1 DB=postgresql
 
 matrix:
   exclude:
-    - rvm: 2.0.0
-      env: REDMINE_VER=2.1.6 DB=mysql
-      gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 2.0.0
-      env: REDMINE_VER=2.2.4 DB=mysql
-      gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 1.8.7
+    - rvm: 2.2.0
       env: REDMINE_VER=2.3.3 DB=mysql
       gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 2.0.0
-      env: REDMINE_VER=2.1.6 DB=postgresql
+    - rvm: 2.2.0
+      env: REDMINE_VER=2.6.9 DB=mysql
       gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 2.0.0
-      env: REDMINE_VER=2.2.4 DB=postgresql
+    - rvm: 1.9.3
+      env: REDMINE_VER=3.2.1 DB=mysql
       gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 1.8.7
+
+    - rvm: 2.2.0
       env: REDMINE_VER=2.3.3 DB=postgresql
+      gemfile: $REDMINE_PATH/Gemfile
+    - rvm: 2.2.0
+      env: REDMINE_VER=2.6.9 DB=postgresql
+      gemfile: $REDMINE_PATH/Gemfile
+    - rvm: 1.9.3
+      env: REDMINE_VER=3.2.1 DB=postgresql
       gemfile: $REDMINE_PATH/Gemfile
 
 before_install:
@@ -50,15 +47,14 @@ before_install:
   - export REDMINE_PATH=$HOME/redmine
   - svn co http://svn.redmine.org/redmine/tags/$REDMINE_VER $REDMINE_PATH
   - ln -s $TRAVIS_BUILD_DIR $REDMINE_PATH/plugins/$PLUGIN_NAME
-  - export DBVER=`if [ "$TRAVIS_RUBY_VERSION" = "1.8.7" ] && [ "$DB" = "mysql" ]; then echo "mysql-1.8.7"; else echo "$DB"; fi`
-  - cp config/database-$DBVER-travis.yml $REDMINE_PATH/config/database.yml
+  - cp config/database-$DB-travis.yml $REDMINE_PATH/config/database.yml
   - cd $REDMINE_PATH
 
 before_script:
-  - rake db:create
-  - rake db:migrate
-  - rake redmine:plugins:migrate
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+  - bundle exec rake redmine:plugins:migrate
 
 script:
-  - rake redmine:plugins:test NAME=$PLUGIN_NAME
+  - bundle exec ruby plugins/$PLUGIN_NAME/test/**/*_test.rb
 
