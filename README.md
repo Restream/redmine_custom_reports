@@ -37,6 +37,6 @@ Enable plugin at project level. Now you will see "Custom report" tab at the proj
 
 ## Compatibility
 
-This version supports only redmine 2.x.
+This version supports redmine 2.x and 3.x
 
 For all tested versions see the "tests matrix":https://travis-ci.org/nodecarter/redmine_custom_reports
