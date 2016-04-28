@@ -6,7 +6,7 @@ class CustomReport < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :user
-  has_many :series, -> { order("name") }, :class_name => "CustomReportSeries"
+  has_many :series, :class_name => "CustomReportSeries"
 
   validates_presence_of :project
   validates_presence_of :user
@@ -22,6 +22,8 @@ class CustomReport < ActiveRecord::Base
       user_id = user.logged? ? user.id : 0
       where "(#{table_name}.is_public = ? OR #{table_name}.user_id = ?)", true, user_id
   }
+
+  scope :by_name, -> { order("name") }
 
   def groupable_columns
     QueryExt.new().groupable_columns.select do |col|

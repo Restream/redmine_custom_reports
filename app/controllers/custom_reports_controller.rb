@@ -22,7 +22,7 @@ class CustomReportsController < ApplicationController
   end
 
   def create
-    params.require(:custom_report).permit!
+    params.required(:custom_report).permit! if params.class.method_defined? :required
     @custom_report = @project.custom_reports.build(params[:custom_report])
     @custom_report.user = User.current
     unless User.current.allowed_to?(:manage_public_custom_reports, @project) ||
@@ -50,7 +50,7 @@ class CustomReportsController < ApplicationController
       @custom_report.is_public = false
     end
 
-    params.require(:custom_report).permit!
+    params.required(:custom_report).permit! if params.class.method_defined? :required
     if @custom_report.update_attributes(params[:custom_report])
       redirect_to url_for(
           :controller => "custom_reports",
@@ -73,7 +73,7 @@ class CustomReportsController < ApplicationController
   private
 
   def find_custom_reports
-    @custom_reports = @project.custom_reports.visible
+    @custom_reports = @project.custom_reports.visible.by_name
     grouped_reports = @custom_reports.group_by(&:is_public)
     @own_custom_reports = grouped_reports[false]
     @public_custom_reports = grouped_reports[true]

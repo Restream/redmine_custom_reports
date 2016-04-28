@@ -1,6 +1,0 @@
-# http://about.travis-ci.org/docs/user/database-setup/#MySQL
-test:
-  adapter: mysql
-  database: redmine
-  username: travis
-  encoding: utf8
