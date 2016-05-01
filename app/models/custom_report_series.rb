@@ -5,6 +5,8 @@ class CustomReportSeries < ActiveRecord::Base
 
   belongs_to :custom_report, :inverse_of => :series
 
+  validates :name, presence: true
+
   def query
     @query ||= build_query
   end

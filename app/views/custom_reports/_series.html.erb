@@ -3,7 +3,7 @@
 <fieldset data-series_id="<%= series_id %>">
   <legend><%= l(:label_series_filters) %></legend>
   <p>
-    <%= f.text_field :name, :size => 80 %>
+    <%= f.text_field :name, size: 80, required: true %>
   </p>
   <%= render :partial => 'series_filters', :locals => {
       :f => f, :query => f.object.query, :series_id => series_id } %>

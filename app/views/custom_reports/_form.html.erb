@@ -18,8 +18,7 @@
 
     <div class="tablular">
       <p>
-        <label for="custom_report_name"><%= l(:field_name) %></label>
-        <%= text_field 'custom_report', 'name', :size => 80 %>
+        <%= f.text_field :name, size: 80, required: true %>
       </p>
 
       <p>
@@ -46,7 +45,7 @@
         <label for="custom_report_group_by"><%= l(:field_group_by) %></label>
         <%= select 'custom_report', 'group_by',
             @custom_report.groupable_columns.collect {|c| [c.caption, c.name.to_s]},
-            :include_blank => true %>
+            include_blank: false %>
       </p>
 
       <p>
