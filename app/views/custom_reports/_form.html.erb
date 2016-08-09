@@ -1,16 +1,10 @@
 <% content_for :header_tags do %>
-  <script type="text/javascript">
-    if(typeof(jQuery) == 'undefined') {
-      document.write("<%= escape_javascript(javascript_include_tag('jquery-1.8.2.min.js', :plugin => 'redmine_custom_reports')) %>");
-      document.write("<%= escape_javascript(javascript_include_tag('jquery-noconflict.js', :plugin => 'redmine_custom_reports')) %>");
-    }
-  </script>
-  <%= javascript_include_tag 'custom_report_edit.js', :plugin => 'redmine_custom_reports' %>
+  <%= javascript_include_tag 'custom_report_edit.js', plugin: 'redmine_custom_reports' %>
 <% end %>
 
 <%= labelled_form_for custom_report,
-    :url => url,
-    :html => { :id => 'custom-report-form' } do |f| %>
+  url:  url,
+  html: { id: 'custom-report-form' } do |f| %>
 
   <%= error_messages_for custom_report %>
 
@@ -23,41 +17,41 @@
 
       <p>
         <label for="custom_report_description"><%= l(:field_description) %></label>
-        <%= text_field 'custom_report', 'description', :size => 80 %>
+        <%= text_field 'custom_report', 'description', size: 80 %>
       </p>
 
       <p>
         <label for="custom_report_chart_type"><%= l(:field_chart_type) %></label>
         <%= select 'custom_report', 'chart_type',
-            CustomReport::CHART_TYPES.collect { |ct| [l("label_chart_type_#{ct}"), ct] },
-            :include_blank => false %>
+          CustomReport::CHART_TYPES.collect { |ct| [l("label_chart_type_#{ct}"), ct] },
+          include_blank: false %>
       </p>
 
       <% if User.current.admin? || User.current.allowed_to?(:manage_public_custom_reports, @project) %>
         <p>
-          <label for="custom_report_is_public"><%=l(:field_is_public)%></label>
+          <label for="custom_report_is_public"><%= l(:field_is_public) %></label>
           <%= check_box 'custom_report', 'is_public',
-              :onchange => (User.current.admin? ? nil : 'if (this.checked) {$("custom_report_is_for_all").checked = false; $("custom_report_is_for_all").disabled = true;} else {$("custom_report_is_for_all").disabled = false;}') %>
+            onchange: (User.current.admin? ? nil : 'if (this.checked) {$("custom_report_is_for_all").checked = false; $("custom_report_is_for_all").disabled = true;} else {$("custom_report_is_for_all").disabled = false;}') %>
         </p>
       <% end %>
 
       <p>
         <label for="custom_report_group_by"><%= l(:field_group_by) %></label>
         <%= select 'custom_report', 'group_by',
-            @custom_report.groupable_columns.collect {|c| [c.caption, c.name.to_s]},
-            include_blank: false %>
+          @custom_report.groupable_columns.collect { |c| [c.caption, c.name.to_s] },
+          include_blank: false %>
       </p>
 
       <p>
         <label for="custom_report_null_text"><%= l(:field_null_text) %></label>
-        <%= text_field 'custom_report', 'null_text', :size => 80 %>
+        <%= text_field 'custom_report', 'null_text', size: 80 %>
       </p>
     </div>
 
-  <%= f.fields_for :series do |series_fields| %>
-    <%= render :partial => 'series', :locals => { :f => series_fields } %>
-  <% end %>
-  <%= link_to_add_custom_report_series l(:message_add_custom_report_series), f %>
+    <%= f.fields_for :series do |series_fields| %>
+      <%= render partial: 'series', locals: { f: series_fields } %>
+    <% end %>
+    <%= link_to_add_custom_report_series l(:message_add_custom_report_series), f %>
 
   </div>
 

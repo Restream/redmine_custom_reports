@@ -5,42 +5,19 @@ services:
   - postgresql
 
 rvm:
-  - 1.9.3
   - 2.2.0
 
 gemfile:
   - $REDMINE_PATH/Gemfile
 
 env:
-  - REDMINE_VER=2.3.3 DB=mysql
-  - REDMINE_VER=2.6.9 DB=mysql
-  - REDMINE_VER=3.2.1 DB=mysql
+  - REDMINE_VER=3.1.6 DB=mysql
+  - REDMINE_VER=3.2.3 DB=mysql
+  - REDMINE_VER=3.3.0 DB=mysql
 
-  - REDMINE_VER=2.3.3 DB=postgresql
-  - REDMINE_VER=2.6.9 DB=postgresql
-  - REDMINE_VER=3.2.1 DB=postgresql
-
-matrix:
-  exclude:
-    - rvm: 2.2.0
-      env: REDMINE_VER=2.3.3 DB=mysql
-      gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 2.2.0
-      env: REDMINE_VER=2.6.9 DB=mysql
-      gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 1.9.3
-      env: REDMINE_VER=3.2.1 DB=mysql
-      gemfile: $REDMINE_PATH/Gemfile
-
-    - rvm: 2.2.0
-      env: REDMINE_VER=2.3.3 DB=postgresql
-      gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 2.2.0
-      env: REDMINE_VER=2.6.9 DB=postgresql
-      gemfile: $REDMINE_PATH/Gemfile
-    - rvm: 1.9.3
-      env: REDMINE_VER=3.2.1 DB=postgresql
-      gemfile: $REDMINE_PATH/Gemfile
+  - REDMINE_VER=3.1.6 DB=postgresql
+  - REDMINE_VER=3.2.3 DB=postgresql
+  - REDMINE_VER=3.3.0 DB=postgresql
 
 before_install:
   - export PLUGIN_NAME=redmine_custom_reports
