@@ -28,7 +28,7 @@ class CustomReportSeries < ActiveRecord::Base
 
   def data_hash
     true
-    @data_hash ||= (query.issue_count_by_group || {})
+    @data_hash ||= (query.result_count_by_group || {})
   end
 
   def flt=(*args)
