@@ -1,7 +1,7 @@
 # Redmine Custom Reports Plugin (with charts)
 
-[![Build Status](https://travis-ci.org/nodecarter/redmine_custom_reports.png?branch=master)](https://travis-ci.org/nodecarter/redmine_custom_reports)
-[![Code Climate](https://codeclimate.com/github/nodecarter/redmine_custom_reports.png)](https://codeclimate.com/github/nodecarter/redmine_custom_reports)
+[![Build Status](https://travis-ci.org/Restream/redmine_custom_reports.svg?branch=master)](https://travis-ci.org/Restream/redmine_custom_reports)
+[![Code Climate](https://codeclimate.com/github/Restream/redmine_custom_reports/badges/gpa.svg)](https://codeclimate.com/github/Restream/redmine_custom_reports)
 
 Redmine plugin to create project reports using [d3.js](http://d3js.org/) charts (with using [NVD3](http://nvd3.org/)). The data for the report - the number of filtered issues grouped by a column.
 
@@ -19,7 +19,7 @@ There are public and private custom reports. Permission "View custom reports" al
 If you are downloading the plugin directly from GitHub,
 you can do so by changing into your plugin directory and issuing a command like
 
-        git clone git://github.com/nodecarter/redmine_custom_reports.git
+        git clone git://github.com/Restream/redmine_custom_reports.git
 
 2. Run the following command to upgrade your database (make a db backup before).
 
@@ -33,10 +33,10 @@ Enable plugin at project level. Now you will see "Custom report" tab at the proj
 
 ## Screenshot
 
-![Sample](https://github.com/nodecarter/redmine_custom_reports/raw/master/screenshot.png)
+![Sample](screenshot.png)
 
 ## Compatibility
 
-This version supports only redmine 2.x.
+This version supports redmine 2.x and 3.x
 
-For all tested versions see the "tests matrix":https://travis-ci.org/nodecarter/redmine_custom_reports
+For all tested versions see the "tests matrix":https://travis-ci.org/Restream/redmine_custom_reports

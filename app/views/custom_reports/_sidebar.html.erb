@@ -1,21 +1,21 @@
 <h3><%= l(:label_custom_report_plural) %></h3>
 
 <%= link_to l(:label_custom_report_view_all),
-            { :controller => 'custom_reports',
-              :action => 'index',
-              :project_id => @project } %><br />
+  { controller: 'custom_reports',
+    action:     'index',
+    project_id: @project } %><br/>
 
 <% if User.current.allowed_to?(:manage_custom_reports, @project) %>
   <%= link_to l(:label_custom_report_new),
-              { :controller => 'custom_reports',
-                :action => 'new',
-                :project_id => @project } %><br />
+    { controller: 'custom_reports',
+      action:     'new',
+      project_id: @project } %><br/>
 <% end %>
 
 <h3><%= l(:label_custom_report_public_list) %></h3>
-<%= render :partial => 'links', :locals => { :custom_reports => @public_custom_reports } %>
+<%= render partial: 'links', locals: { custom_reports: @public_custom_reports } %>
 
 <% if User.current.allowed_to?(:manage_custom_reports, @project) %>
   <h3><%= l(:label_custom_report_own_list) %></h3>
-  <%= render :partial => 'links', :locals => { :custom_reports => @own_custom_reports } %>
+  <%= render partial: 'links', locals: { custom_reports: @own_custom_reports } %>
 <% end %>
