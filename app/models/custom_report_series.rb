@@ -3,7 +3,7 @@ class CustomReportSeries < ActiveRecord::Base
 
   serialize :filters
 
-  belongs_to :custom_report, inverse_of: :series
+  belongs_to :custom_report, inverse_of: :series, optional: true
 
   validates :name, presence: true
 
