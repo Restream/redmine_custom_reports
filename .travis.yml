@@ -11,18 +11,12 @@ gemfile:
   - $REDMINE_PATH/Gemfile
 
 env:
-  - REDMINE_VER=3.1.6 DB=mysql
-  - REDMINE_VER=3.2.3 DB=mysql
-  - REDMINE_VER=3.3.0 DB=mysql
   - REDMINE_VER=4.0.0 DB=mysql
   - REDMINE_VER=4.0.1 DB=mysql
   - REDMINE_VER=4.0.2 DB=mysql
   - REDMINE_VER=4.0.3 DB=mysql
   - REDMINE_VER=4.0.4 DB=mysql
 
-  - REDMINE_VER=3.1.6 DB=postgresql
-  - REDMINE_VER=3.2.3 DB=postgresql
-  - REDMINE_VER=3.3.0 DB=postgresql
   - REDMINE_VER=4.0.0 DB=postgresql
   - REDMINE_VER=4.0.1 DB=postgresql
   - REDMINE_VER=4.0.2 DB=postgresql
@@ -38,9 +32,9 @@ before_install:
   - cd $REDMINE_PATH
 
 before_script:
-  - bundle exec rake db:create
-  - bundle exec rake db:migrate
-  - bundle exec rake redmine:plugins:migrate
+  - bundle exec rails db:create
+  - bundle exec rails db:migrate
+  - bundle exec rails redmine:plugins:migrate
 
 script:
   - bundle exec ruby plugins/$PLUGIN_NAME/test/**/*_test.rb
