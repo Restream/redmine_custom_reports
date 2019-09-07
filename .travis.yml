@@ -14,10 +14,20 @@ env:
   - REDMINE_VER=3.1.6 DB=mysql
   - REDMINE_VER=3.2.3 DB=mysql
   - REDMINE_VER=3.3.0 DB=mysql
+  - REDMINE_VER=4.0.0 DB=mysql
+  - REDMINE_VER=4.0.1 DB=mysql
+  - REDMINE_VER=4.0.2 DB=mysql
+  - REDMINE_VER=4.0.3 DB=mysql
+  - REDMINE_VER=4.0.4 DB=mysql
 
   - REDMINE_VER=3.1.6 DB=postgresql
   - REDMINE_VER=3.2.3 DB=postgresql
   - REDMINE_VER=3.3.0 DB=postgresql
+  - REDMINE_VER=4.0.0 DB=postgresql
+  - REDMINE_VER=4.0.1 DB=postgresql
+  - REDMINE_VER=4.0.2 DB=postgresql
+  - REDMINE_VER=4.0.3 DB=postgresql
+  - REDMINE_VER=4.0.4 DB=postgresql
 
 before_install:
   - export PLUGIN_NAME=redmine_custom_reports
