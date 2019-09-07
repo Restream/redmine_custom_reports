@@ -1,11 +1,11 @@
 class CustomReportsController < ApplicationController
   unloadable
 
-  before_filter :find_project_by_project_id
-  before_filter :authorize
-  before_filter :find_custom_reports, only: [:index, :show, :new, :edit]
-  before_filter :find_custom_report, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize_to_manage, only: [:edit, :update, :destroy]
+  before_action :find_project_by_project_id
+  before_action :authorize
+  before_action :find_custom_reports, only: [:index, :show, :new, :edit]
+  before_action :find_custom_report, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_to_manage, only: [:edit, :update, :destroy]
 
   helper :queries
   include QueriesHelper

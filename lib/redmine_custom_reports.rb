@@ -1,4 +1,4 @@
-ActionDispatch::Callbacks.to_prepare do
+ActiveSupport::Reloader.to_prepare do
 
   # Requiring plugin's controller and model
   require_dependency 'custom_report'
