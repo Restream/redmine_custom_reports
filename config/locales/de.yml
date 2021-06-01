@@ -1,0 +1,26 @@
+de:
+  label_custom_report_plural: Eigene Auswertungen
+  label_custom_report_view_all: Alle Auswertungen
+  label_custom_report_new: Neue Auswertung
+  label_custom_report_public_list: Öffentliche Auswertungen
+  label_custom_report_own_list: Meine Auswertungen
+  label_custom_report_edit: Bearbeiten
+  label_series_filters: Ansicht
+
+  label_chart_type_undev_pie: "Undev Pie"
+  label_chart_type_pie: Kreis
+  label_chart_type_donut: Donut
+  label_chart_type_bar: Säulen
+  label_chart_type_horizontal_bar: Balken
+  label_chart_type_stacked_bar: Stapelbalken
+
+  field_chart_type: Diagrammtyp
+  field_null_text: Text für Nullwerte
+  field_series_name: Name der Ansicht
+
+  message_custom_reports_created: Auswertung erstellt
+  message_custom_reports_updated: Auswertung aktualisiert
+  message_custom_reports_destroyed: Auswertung gelöscht
+  message_cant_delete_last_series: Eine Auswertung muss mindestens eine Ansicht haben
+  message_add_custom_report_series: Ansicht hinzufügen
+  message_remove_custom_report_series: Ansicht löschen

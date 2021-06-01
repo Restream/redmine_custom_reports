@@ -1,4 +1,4 @@
-class CreateCustomReports < ActiveRecord::Migration
+class CreateCustomReports < ActiveRecord::Migration[5.2]
   def self.up
     unless table_exists? :custom_reports
       create_table :custom_reports do |t|

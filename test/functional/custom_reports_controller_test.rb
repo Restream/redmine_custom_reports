@@ -16,7 +16,6 @@ class CustomReportsControllerTest < ActionController::TestCase
     @user        = User.find(1)
     User.current = @user
 
-    @request                   = ActionController::TestRequest.new
     @request.session[:user_id] = @user.id
 
     @custom_report = @project.custom_reports.create!(
@@ -34,17 +33,17 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_show_all_custom_reports
-    get :index, project_id: @project.identifier
+    get :index, params: { project_id: @project.identifier }
     assert_response :success
   end
 
   def test_show_custom_report
-    get :new, project_id: @project.identifier, id: @custom_report.id
+    get :new, params: { project_id: @project.identifier, id: @custom_report.id }
     assert_response :success
   end
 
   def test_show_new_custom_report
-    get :new, project_id: @project.identifier
+    get :new, params: { project_id: @project.identifier }
     assert_response :success
   end
 
@@ -69,7 +68,7 @@ class CustomReportsControllerTest < ActionController::TestCase
         }
       }
     }
-    post :create, project_id: @project.identifier, custom_report: attrs
+    post :create, params: { project_id: @project.identifier, custom_report: attrs }
     assert_response :redirect
     custom_report = @project.custom_reports.find_by_name(attrs[:name])
     assert custom_report
@@ -86,7 +85,7 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_show_edit_custom_report
-    get :edit, project_id: @project.identifier, id: @custom_report.id
+    get :edit, params: { project_id: @project.identifier, id: @custom_report.id }
     assert_response :success
   end
 
@@ -116,7 +115,7 @@ class CustomReportsControllerTest < ActionController::TestCase
         }
       }
     }
-    put :update, project_id: @project.identifier, id: @custom_report.id, custom_report: attrs
+    put :update, params: { project_id: @project.identifier, id: @custom_report.id, custom_report: attrs }
     assert_response :redirect
     @custom_report.reload
     assert_equal attrs[:description], @custom_report.description
@@ -132,7 +131,7 @@ class CustomReportsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_custom_report
-    delete :destroy, project_id: @project.identifier, id: @custom_report.id
+    delete :destroy, params: { project_id: @project.identifier, id: @custom_report.id }
     assert_response :redirect
     custom_report = CustomReport.find_by_id @custom_report.id
     assert_nil custom_report

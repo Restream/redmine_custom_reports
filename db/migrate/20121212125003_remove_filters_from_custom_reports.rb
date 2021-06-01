@@ -1,4 +1,4 @@
-class RemoveFiltersFromCustomReports < ActiveRecord::Migration
+class RemoveFiltersFromCustomReports < ActiveRecord::Migration[5.2]
   def self.up
     if column_exists? :custom_reports, :filters
       remove_column :custom_reports, :filters
