@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Redmine 4.x support (no backward compatability!)
+* german translations
 
 ### Fixed
 
